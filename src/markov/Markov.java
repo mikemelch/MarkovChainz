@@ -68,7 +68,7 @@ public class Markov {
 	public void addSentence(String sentence){
 		String words[] = sentence.split("\\s+");
 		
-		if(words.length <= 0){
+		if(words.length <= 0 || words[0].equals(".")){
 			return;
 		}
 		
@@ -77,6 +77,9 @@ public class Markov {
 		
 		for(int i = 0; i < words.length; i++){
 			Suffix suffix;
+			if(words[i].equals(".")){
+				continue;
+			}
 			
 			if(i == words.length - 1){
 				suffix = new Suffix(words[i], true);
@@ -100,8 +103,14 @@ public class Markov {
 	 */
 	private String getNextWord(List<String> prefixWords){
 		Prefix prefix = new Prefix(prefixWords);
-		DenseBag bag = this.chains.get(prefix);
-		return bag.getWithProbability().getWord();
+		if(this.chains.containsKey(prefix)){
+			DenseBag bag = this.chains.get(prefix);
+			return bag.getWithProbability().getWord();
+		}else{
+			return null;
+		}
+		
+		
 	}
 	
 	/**
@@ -117,6 +126,9 @@ public class Markov {
 		
 		for(int i = 0; i < maxWords; i++){
 			String next = this.getNextWord(prefix);
+			if(next == null){
+				
+			}
 			sentence += (next + " ");
 			if(prefix.size() == ORDER){
 				prefix.remove(0);
