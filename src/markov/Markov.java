@@ -73,7 +73,8 @@ public class Markov {
 		}
 		
 		List<String> prefix = new ArrayList<String>();
-		prefix.add("");
+		prefix.add(""); //The empty string is always the first character
+		
 		for(int i = 0; i < words.length; i++){
 			Suffix suffix;
 			
