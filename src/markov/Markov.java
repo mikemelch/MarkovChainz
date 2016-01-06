@@ -76,20 +76,25 @@ public class Markov {
 		return bag.getWithProbability().getWord();
 	}
 	
-	public String generate(){
+	public String generate(int maxWords){
 		String sentence = "";
 		List<String> prefix = new ArrayList<String>();
 		prefix.add("");
 		
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < maxWords; i++){
 			String next = this.getNextWord(prefix);
-			sentence += next;
+			sentence += (next + " ");
 			if(prefix.size() == ORDER){
 				prefix.remove(0);
 			}
 			prefix.add(next);
 		}
 		return sentence;
+	}
+	
+	
+	public String generate(){
+		return generate(15);
 	}
 	
 	public String toString(){
