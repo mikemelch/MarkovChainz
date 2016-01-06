@@ -11,6 +11,20 @@ import markov.Markov;
 
 public class RapGenius {
 	
+	 public static void populateSongLyricsFromSongs(Artist artist){
+		//TODO
+	 }
+	
+	public static int populateSongsFromArtistPage(Artist artist){
+		//TODO
+		return artist.getNumberOfSongs();
+	}
+	
+	public static Artist searchArtist(String artistSearch){
+		//TODO
+		return null;
+	}
+	
 	public static void main(String args[]){
 		try {
 			Document doc = Jsoup.connect("http://genius.com/Travis-scott-wonderful-lyrics").userAgent("Mozilla").get();
@@ -21,10 +35,10 @@ public class RapGenius {
 				lyrics = e.text().replaceAll("br2n", ".\n");
 			}
 			Markov m = new Markov();
-			for(String s : lyrics.split("\n")){
-				m.addSentence(s);
-			}
+			lyrics = lyrics.replaceAll(".\n", ". ");
+			m.addSentence(lyrics);
 			System.out.println(m.toString());
+			System.out.println(m.generate(50));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
