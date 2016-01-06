@@ -30,10 +30,8 @@ public class DenseBag {
 		if(bag.size() == 1){
 			return bag.keySet().iterator().next();
 		}
-		
-		int indexToReturn = new Random().nextInt(this.totalItems);
+		int indexToReturn = new Random().nextInt(this.totalItems) + 1;
 		int currentIndex = 0;
-		System.out.println(indexToReturn);
 		for(Map.Entry<Suffix, Integer> entry : this.bag.entrySet()){
 			currentIndex += entry.getValue();
 			if(currentIndex >= indexToReturn){
