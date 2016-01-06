@@ -14,6 +14,11 @@ public class DenseBag {
 		this.totalItems = 0;
 	}
 	
+	/**
+	 * Adds a suffix to the DenseBag
+	 * 
+	 * @param s
+	 */
 	public void put(Suffix s){
 		if(this.bag.containsKey(s)){
 			int value = this.bag.get(s);
@@ -25,6 +30,11 @@ public class DenseBag {
 		this.totalItems++;
 	}
 	
+	/**
+	 * Uses a random number generator to pick the next word using certain weights
+	 * 
+	 * @return Suffix
+	 */
 	public Suffix getWithProbability(){
 		
 		if(bag.size() == 1){
@@ -49,6 +59,7 @@ public class DenseBag {
 		
 	}
 	
+	@Override
 	public String toString(){
 		String toString = "DenseBag[";
 		for(Map.Entry<Suffix, Integer> entry : this.bag.entrySet()){

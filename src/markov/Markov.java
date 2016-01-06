@@ -16,6 +16,11 @@ public class Markov {
 		this.totalOccurances = new HashMap<String, Integer>();
 	}
 	
+	/**
+	 * Updates the totalOccurances HashMap to reflect the current counts of all words
+	 * 
+	 * @param suffix
+	 */
 	private void addWord(Suffix suffix){
 		String _word = suffix.getWord().toLowerCase();
 		if(this.totalOccurances.containsKey(_word)){
@@ -26,6 +31,12 @@ public class Markov {
 		}
 	}
 	
+	/**
+	 * Updates the chains HashMap with the new prefix and suffix combination
+	 * 
+	 * @param prefix
+	 * @param suffix
+	 */
 	private void put(Prefix prefix, Suffix suffix){
 		this.addWord(suffix);
 
@@ -39,11 +50,21 @@ public class Markov {
 			this.chains.put(prefix, bag);
 		}
 	}
-
+	/**
+	 * Returns the final variable ORDER
+	 * 
+	 * @return
+	 */
 	public static int getOrder() {
 		return ORDER;
 	}
 	
+	/**
+	 * Uses Markov theory to add prefix -> following word mappings
+	 * The prefix will always be less than or equal to the defined ORDER (usually 2 - 4)
+	 * 
+	 * @param sentence
+	 */
 	public void addSentence(String sentence){
 		String words[] = sentence.split("\\s+");
 		
@@ -70,12 +91,24 @@ public class Markov {
 		}
 	}
 	
+	/**
+	 * Method which determines the next word given a list of prefix words
+	 * 
+	 * @param prefixWords
+	 * @return String
+	 */
 	private String getNextWord(List<String> prefixWords){
 		Prefix prefix = new Prefix(prefixWords);
 		DenseBag bag = this.chains.get(prefix);
 		return bag.getWithProbability().getWord();
 	}
 	
+	/**
+	 * Takes an integer which is the maximum number of words the user would like generated
+	 * 
+	 * @param maxWords
+	 * @return String
+	 */
 	public String generate(int maxWords){
 		String sentence = "";
 		List<String> prefix = new ArrayList<String>();
@@ -92,11 +125,16 @@ public class Markov {
 		return sentence;
 	}
 	
-	
+	/**
+	 * If not maxWords isn't specified, run generate with a default value (15)
+	 * 
+	 * @return String
+	 */
 	public String generate(){
 		return generate(15);
 	}
-	
+
+	@Override
 	public String toString(){
 		String toString = "Markov[";
 		
