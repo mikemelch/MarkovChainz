@@ -6,15 +6,15 @@ import java.util.Random;
 
 public class DenseBag {
 	
-	private HashMap<String, Integer> bag;
+	private HashMap<Suffix, Integer> bag;
 	private int totalItems;
 	
 	public DenseBag(){
-		this.bag = new HashMap<String, Integer>();
+		this.bag = new HashMap<Suffix, Integer>();
 		this.totalItems = 0;
 	}
 	
-	private void put(String s){
+	public void put(Suffix s){
 		if(this.bag.containsKey(s)){
 			int value = this.bag.get(s);
 			this.bag.put(s, (value + 1));
@@ -25,11 +25,16 @@ public class DenseBag {
 		this.totalItems++;
 	}
 	
-	private String getWithProbability(){
+	public Suffix getWithProbability(){
+		
+		if(bag.size() == 1){
+			return bag.keySet().iterator().next();
+		}
+		
 		int indexToReturn = new Random().nextInt(this.totalItems);
 		int currentIndex = 0;
-		
-		for(Map.Entry<String, Integer> entry : this.bag.entrySet()){
+		System.out.println(indexToReturn);
+		for(Map.Entry<Suffix, Integer> entry : this.bag.entrySet()){
 			currentIndex += entry.getValue();
 			if(currentIndex >= indexToReturn){
 				return entry.getKey();
@@ -44,6 +49,15 @@ public class DenseBag {
 		
 		return null;
 		
+	}
+	
+	public String toString(){
+		String toString = "DenseBag[";
+		for(Map.Entry<Suffix, Integer> entry : this.bag.entrySet()){
+			toString += entry.getKey().getWord() + "=" + entry.getValue() + ",";
+		}
+		toString += "]";
+		return toString;
 	}
 }
 
