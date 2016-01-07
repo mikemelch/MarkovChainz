@@ -31,6 +31,10 @@ public class Artist {
 	public void setArtistName(String artistName) {
 		this.artistName = artistName;
 	}
+	
+	public ArrayList<Song> getSongs(){
+		return this.songs;
+	}
 
 	public int getNumberOfSongs() {
 		return numberOfSongs;
