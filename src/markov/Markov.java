@@ -9,11 +9,18 @@ public class Markov {
 	private HashMap<Prefix, DenseBag> chains;
 	private HashMap<String, Integer> totalOccurances;
 	
-	private static final int ORDER = 2;
+	private int ORDER;
 	
 	public Markov(){
 		this.chains = new HashMap<Prefix, DenseBag>();
 		this.totalOccurances = new HashMap<String, Integer>();
+		this.ORDER = 2;
+	}
+	
+	public Markov(int order){
+		this.chains = new HashMap<Prefix, DenseBag>();
+		this.totalOccurances = new HashMap<String, Integer>();
+		this.ORDER = order;
 	}
 	
 	/**
@@ -55,7 +62,7 @@ public class Markov {
 	 * 
 	 * @return
 	 */
-	public static int getOrder() {
+	public int getOrder() {
 		return ORDER;
 	}
 	
