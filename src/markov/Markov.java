@@ -130,11 +130,13 @@ public class Markov {
 		String sentence = "";
 		List<String> prefix = new ArrayList<String>();
 		prefix.add("");
-		
+
 		for(int i = 0; i < maxWords; i++){
 			String next = this.getNextWord(prefix);
 			if(next == null){
-				
+				prefix.clear();
+				prefix.add("");
+				continue;
 			}
 			sentence += (next + " ");
 			if(prefix.size() == ORDER){
@@ -142,7 +144,7 @@ public class Markov {
 			}
 			prefix.add(next);
 		}
-		return sentence;
+		return sentence.trim();
 	}
 	
 	/**
