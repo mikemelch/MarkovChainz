@@ -24,17 +24,17 @@ public class Lyrics {
 		String lyricsByArtistDesired = "";
 		
 		for(String segment : this.songLyrics.split("\\[")){
-			if(segment.length() == 0){
+			if(segment.length() == 0 || segment.indexOf(']') == -1){
 				continue;
 			}
-			
 			String title = segment.substring(0, segment.indexOf(']'));
-			if(title.contains(artistDesired) 
-					|| (title.contains("Verse")
-					|| title.contains("Hook")
-					|| title.contains("Outro")
-					|| title.contains("Bridge"))){
-				lyricsByArtistDesired += segment.substring(segment.indexOf(']') + 3);
+
+			if(title.contains(artistDesired) || (!title.contains(":") && artistDesired.equals(this.primaryArtistOnSong))){
+				try{
+					lyricsByArtistDesired += segment.substring(segment.indexOf(']') + 3);
+				}catch(Exception e){
+					continue;
+				}	
 			}
 		}
 		return lyricsByArtistDesired;

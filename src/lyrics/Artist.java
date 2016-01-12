@@ -60,4 +60,8 @@ public class Artist {
 			this.markovModel.addSentence(song.getSongLyrics().getArtistsLyricsFromSong(this.artistName));
 		}
 	}
+	
+	public Markov getMarkovModel(){
+		return this.markovModel;
+	}
 }

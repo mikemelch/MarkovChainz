@@ -17,13 +17,15 @@ public class RapGenius {
 	 * 
 	 * @param artist
 	 */
-	public static void populateSongLyricsFromSongs(Artist artist){
+	public static void populateSongLyricsFromSongs(Artist artist){	
 		Document doc = null;
 		String primaryArtistName;
 		String songTitle;
 		String songLyrics = "";
 		 
 		for(Song song : artist.getSongs()){
+			
+			System.out.println("Processing song: " + song.getSongTitle());
 			
 			try {
 				doc = Jsoup.connect(song.getRapGeniusLink()).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A").get();
