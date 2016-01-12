@@ -91,6 +91,8 @@ public class RapGenius {
 			
 			for(Element songLink : songLinks){
 				String songTitle = songLink.getElementsByClass("song_title").text();
+				
+				//If we go out of alphabetical order, then we are on duplicate and unnecessary songs
 				if(songTitle.compareTo(previousSongTitle) < 0){
 					return artist.getNumberOfSongs();
 				}
