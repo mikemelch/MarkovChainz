@@ -71,6 +71,7 @@ public class RapGenius {
 		paginationLink += "&page=";
 		
 		int pageCount = 1;
+		String previousSongTitle = "";
 		
 		while(true){
 			
@@ -89,7 +90,12 @@ public class RapGenius {
 			}
 			
 			for(Element songLink : songLinks){
-				artist.addSong(new Song(songLink.attr("title"), songLink.attr("href")));
+				String songTitle = songLink.getElementsByClass("song_title").text();
+				if(songTitle.compareTo(previousSongTitle) < 0){
+					return artist.getNumberOfSongs();
+				}
+				artist.addSong(new Song(songTitle, songLink.attr("href")));
+				previousSongTitle = songTitle;
 			}
 			
 			pageCount++;
