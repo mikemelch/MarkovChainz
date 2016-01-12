@@ -1,11 +1,13 @@
-import markov.Markov;
+import lyrics.Artist;
+import lyrics.RapGenius;
+import lyrics.Song;
 
 public class Client {
 	
 	public static void main(String args[]){
-		Markov markov = new Markov();
-		markov.addSentence("This is a nice sentence. This is another sentence. This is another sentence.");
-		//System.out.println(markov.toString());
-		System.out.println(markov.generate());
+		Artist testArtist = new Artist("Travis Scott");
+		testArtist.addSong(new Song("http://genius.com/Kanye-west-monster-lyrics"));
+		RapGenius.populateSongLyricsFromSongs(testArtist);
+		testArtist.getSongs().get(0).getSongLyrics().getArtistsLyricsFromSong("Bon Iver");
 	}
 }

@@ -5,6 +5,11 @@ public class Song {
 	private String rapGeniusLink;
 	private Lyrics songLyrics;
 	
+	public Song(String rapGeniusLink){
+		this.setRapGeniusLink(rapGeniusLink);
+		this.setSongLyrics(new Lyrics());
+	}
+	
 	public Song(String songTitle, String rapGeniusLink){
 		this.setSongTitle(songTitle);
 		this.setRapGeniusLink(rapGeniusLink);

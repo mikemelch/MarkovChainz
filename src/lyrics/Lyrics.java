@@ -14,9 +14,20 @@ public class Lyrics {
 
 	}
 	
-	public String getArtistsLyricsFromSong(){
-		//TODO
-		return null;
+	public String getArtistsLyricsFromSong(String artistDesired){
+		String lyricsByArtistDesired = "";
+		
+		for(String segment : this.songLyrics.split("\\[")){
+			if(segment.length() == 0 || !segment.contains(":")){
+				continue;
+			}
+			
+			String title = segment.substring(0, segment.indexOf(']'));
+			if(title.contains(artistDesired)){
+				lyricsByArtistDesired += segment.substring(segment.indexOf(']') + 3);
+			}
+		}
+		return lyricsByArtistDesired;
 	}
 
 	public String getSongLyrics() {
