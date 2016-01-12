@@ -52,7 +52,12 @@ public class Artist {
 		this.rapGeniusArtistLink = rapGeniusArtistLink;
 	}
 	
+	/**
+	 * Populates an artist's markov model with their song lyrics
+	 */
 	public void populateArtistMarkov(){
-		//TODO
+		for(Song song : this.songs){
+			this.markovModel.addSentence(song.getSongLyrics().getArtistsLyricsFromSong(this.artistName));
+		}
 	}
 }
