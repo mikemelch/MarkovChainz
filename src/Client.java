@@ -9,7 +9,8 @@ public class Client {
 	}
 	
 	public static void main(String args[]){
-		Artist testArtist = RapGenius.searchArtist("bon iver");
+		Artist testArtist = RapGenius.searchArtist("chadwick stokes");
+		
 		RapGenius.populateSongsFromArtistPage(testArtist);
 		RapGenius.populateSongLyricsFromSongs(testArtist);
 		testArtist.populateArtistMarkov();

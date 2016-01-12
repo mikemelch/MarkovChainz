@@ -66,6 +66,18 @@ public class RapGenius {
 			e1.printStackTrace();
 		}
 		Elements paginationElements = doc.getElementsByClass("pagination");
+		
+		//if an artist only has one page of songs
+		if(paginationElements.size() == 0){
+			Elements songLinks = doc.getElementsByClass("song_link");
+			
+			for(Element songLink : songLinks){
+				String songTitle = songLink.getElementsByClass("song_title").text();
+				artist.addSong(new Song(songTitle, songLink.attr("href")));
+			}
+			System.out.println();
+			return artist.getNumberOfSongs();
+		}
 		String paginationLink = paginationElements.get(0).getElementsByTag("a").get(0).attr("href");
 		paginationLink = paginationLink.split("&page=")[0];
 		paginationLink += "&page=";
