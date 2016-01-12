@@ -94,6 +94,7 @@ public class RapGenius {
 				
 				//If we go out of alphabetical order, then we are on duplicate and unnecessary songs
 				if(songTitle.compareTo(previousSongTitle) < 0){
+					System.out.println();
 					return artist.getNumberOfSongs();
 				}
 				artist.addSong(new Song(songTitle, songLink.attr("href")));
