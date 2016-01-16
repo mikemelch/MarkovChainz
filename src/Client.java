@@ -1,19 +1,60 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import lyrics.Artist;
 import lyrics.RapGenius;
-import lyrics.Song;
 
 public class Client {
 	
+	static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+	
+	public static String[] getInput(){
+		System.out.printf(">>> ");
+		System.out.flush();
+		String result = null;
+		try {
+		    result = inputReader.readLine();
+		} catch (IOException ex) {
+		    System.err.println(ex.getMessage());
+		    System.exit(1);
+		}
+		return result.trim().split(" ");
+	}
+	
 	public static void commandLine(){
+		Artist artist = null;
+		while(true){
+			String[] command = getInput();
+			if(command.length >= 2){
+				switch(command[0]){
+					case "generate":
+						System.out.println(artist.getMarkovModel().generate(Integer.parseInt(command[1])));
+						break;
+					case "search":
+						String searchQuery = "";
+						for(int i = 1; i < command.length; i++){
+							searchQuery += command[i] + " ";
+						}
+						
+						artist = RapGenius.searchArtist(searchQuery.trim());
+						RapGenius.populateSongsFromArtistPage(artist);
+						RapGenius.populateSongLyricsFromSongs(artist);
+						artist.populateArtistMarkov();
+						break;
+				}
+			}
+		}
 		
 	}
 	
 	public static void main(String args[]){
-		Artist testArtist = RapGenius.searchArtist("drake");
+		commandLine();
+		/*Artist testArtist = RapGenius.searchArtist("drake");
 		
 		RapGenius.populateSongsFromArtistPage(testArtist);
 		RapGenius.populateSongLyricsFromSongs(testArtist);
 		testArtist.populateArtistMarkov();
-		System.out.println(testArtist.getMarkovModel().generate(200));
+		System.out.println(testArtist.getMarkovModel().generate(200));*/
 	}
 }
