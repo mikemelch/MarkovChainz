@@ -44,7 +44,11 @@ public class Client {
 						artist = RapGenius.searchArtist(searchQuery.trim());
 						RapGenius.populateSongsFromArtistPage(artist);
 						RapGenius.populateSongLyricsFromSongs(artist);
-						artist.populateArtistMarkov();
+						
+						break;
+					case "markov":
+						artist.populateArtistMarkov(Integer.parseInt(command[1]));
+						System.out.println("Created Markov model with an order = " + Integer.parseInt(command[1]));
 						break;
 					default:
 						System.out.println("Welcome to Markov Chainz.\n\nCommands:\n"

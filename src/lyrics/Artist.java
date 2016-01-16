@@ -55,7 +55,8 @@ public class Artist {
 	/**
 	 * Populates an artist's markov model with their song lyrics
 	 */
-	public void populateArtistMarkov(){
+	public void populateArtistMarkov(int order){
+		this.markovModel = new Markov(order);
 		for(Song song : this.songs){
 			this.markovModel.addSentence(song.getSongLyrics().getArtistsLyricsFromSong(this.artistName));
 		}
