@@ -53,7 +53,8 @@ public class Client {
 					default:
 						System.out.println("Welcome to Markov Chainz.\n\nCommands:\n"
 								+ "\n\tsearch <artist name>"
-								+ "\n\tgenerate <number of words>");
+								+ "\n\tgenerate <number of words>"
+								+ "\n\tmarkov <order>");
 						break;
 						
 				}

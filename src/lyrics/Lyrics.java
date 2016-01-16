@@ -22,11 +22,17 @@ public class Lyrics {
 	 */
 	public String getArtistsLyricsFromSong(String artistDesired){
 		String lyricsByArtistDesired = "";
-		
+	
 		for(String segment : this.songLyrics.split("\\[")){
+			
+			if(segment.indexOf(']') == -1 && segment.indexOf('[') == -1){
+				lyricsByArtistDesired += segment;
+			}
+			
 			if(segment.length() == 0 || segment.indexOf(']') == -1){
 				continue;
 			}
+			
 			String title = segment.substring(0, segment.indexOf(']'));
 
 			if(title.contains(artistDesired) || (!title.contains(":") && artistDesired.equals(this.primaryArtistOnSong))){
