@@ -51,17 +51,19 @@ public class RapGenius {
 	 * Populates all of an artist's songs on Rap Genius into the passed Artist object
 	 * 
 	 * @param artist
+	 * @param maxSongs
 	 * @return
 	 */
-	public static int populateSongsFromArtistPage(Artist artist){
+	public static int populateSongsFromArtistPage(Artist artist, int maxSongs){
 		
 		System.out.print("Populating artist's songs..");
 		
 		Document doc = null;
 		String url = artist.getRapGeniusArtistLink();
+		int songCount = 0;
 		
 		try {
-			doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A").get();
+			doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9").get();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -72,6 +74,10 @@ public class RapGenius {
 			Elements songLinks = doc.getElementsByClass("song_link");
 			
 			for(Element songLink : songLinks){
+				if(songCount >= maxSongs){
+					return artist.getNumberOfSongs();
+				}
+				songCount++;
 				String songTitle = songLink.getElementsByClass("song_title").text();
 				artist.addSong(new Song(songTitle, songLink.attr("href")));
 			}
@@ -83,14 +89,13 @@ public class RapGenius {
 		paginationLink += "&page=";
 		
 		int pageCount = 1;
-		String previousSongTitle = "";
 		
-		while(true){
+		while(songCount <= maxSongs){
 			
 			if(pageCount % 5 == 0) System.out.print(".");
 			
 			try {
-				doc = Jsoup.connect(baseLink + paginationLink + pageCount).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A").get();
+				doc = Jsoup.connect(baseLink + paginationLink + pageCount).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9").get();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -103,18 +108,25 @@ public class RapGenius {
 			
 			for(Element songLink : songLinks){
 				String songTitle = songLink.getElementsByClass("song_title").text();
-				
-				//If we go out of alphabetical order, then we are on duplicate and unnecessary songs
-				if(songTitle.compareTo(previousSongTitle) < 0){
-					System.out.println();
-					return artist.getNumberOfSongs();
-				}
 				artist.addSong(new Song(songTitle, songLink.attr("href")));
-				previousSongTitle = songTitle;
+				songCount++;
 			}
 			
 			pageCount++;
 		}
+		return artist.getNumberOfSongs();
+	}
+	
+	
+	/**
+	 * Populates all of an artist's songs on Rap Genius into the passed Artist object
+	 * Default value for maxSongs is 200
+	 * 
+	 * @param artist
+	 * @return
+	 */
+	public static int populateSongsFromArtistPage(Artist artist){
+		return populateSongsFromArtistPage(artist, 200);
 	}
 	
 	/**
@@ -140,6 +152,7 @@ public class RapGenius {
 				String rapGeniusArtistName = artistLink.text();
 				Artist newArtist = new Artist(rapGeniusArtistName);
 				newArtist.setRapGeniusArtistLink(artistLink.attr("href"));
+				System.out.println("Found artist: " + rapGeniusArtistName);
 				return newArtist;
 			}
 		}
