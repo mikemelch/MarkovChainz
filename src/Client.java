@@ -26,9 +26,13 @@ public class Client {
 		Artist artist = null;
 		while(true){
 			String[] command = getInput();
-			if(command.length >= 2){
+			if(command.length > 0){
 				switch(command[0]){
 					case "generate":
+						if(artist == null){
+							System.out.println("Search for an artist before generating text.");
+							break;
+						}
 						System.out.println(artist.getMarkovModel().generate(Integer.parseInt(command[1])));
 						break;
 					case "search":
@@ -42,6 +46,12 @@ public class Client {
 						RapGenius.populateSongLyricsFromSongs(artist);
 						artist.populateArtistMarkov();
 						break;
+					default:
+						System.out.println("Welcome to Markov Chainz.\n\nCommands:\n"
+								+ "\n\tsearch <artist name>"
+								+ "\n\tgenerate <number of words>");
+						break;
+						
 				}
 			}
 		}
