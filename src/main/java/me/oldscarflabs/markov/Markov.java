@@ -1,4 +1,4 @@
-package markov;
+package me.oldscarflabs.markov;
 
 import java.util.ArrayList;
 import java.util.HashMap;

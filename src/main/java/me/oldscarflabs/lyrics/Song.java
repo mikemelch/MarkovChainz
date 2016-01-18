@@ -1,9 +1,11 @@
-package lyrics;
+package me.oldscarflabs.lyrics;
 
 public class Song {
 	private String songTitle;
 	private String rapGeniusLink;
 	private Lyrics songLyrics;
+	
+	public Song(){}
 	
 	public Song(String rapGeniusLink){
 		this.setRapGeniusLink(rapGeniusLink);

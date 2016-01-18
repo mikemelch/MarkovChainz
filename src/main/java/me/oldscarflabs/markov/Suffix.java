@@ -1,4 +1,4 @@
-package markov;
+package me.oldscarflabs.markov;
 
 public class Suffix {
 	private String word;

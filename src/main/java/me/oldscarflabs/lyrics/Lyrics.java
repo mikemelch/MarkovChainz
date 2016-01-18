@@ -1,4 +1,4 @@
-package lyrics;
+package me.oldscarflabs.lyrics;
 
 public class Lyrics {
 	private String songLyrics;

@@ -1,4 +1,4 @@
-package lyrics;
+package me.oldscarflabs.lyrics;
 
 import java.io.IOException;
 import java.net.URLEncoder;

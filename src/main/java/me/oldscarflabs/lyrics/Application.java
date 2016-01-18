@@ -1,13 +1,25 @@
+package me.oldscarflabs.lyrics;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import lyrics.Artist;
-import lyrics.RapGenius;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class Client {
+@SpringBootApplication
+public class Application implements CommandLineRunner{
+	
+	@Autowired
+	private ArtistRepository repository;
 	
 	static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+	
+	public static Artist checkDatabaseForArtist(String artistName, ArtistRepository repository){
+		return repository.findByArtistName(artistName);
+	}
 	
 	public static String[] getInput(){
 		System.out.printf(">>> ");
@@ -22,7 +34,7 @@ public class Client {
 		return result.trim().split(" ");
 	}
 	
-	public static void commandLine(){
+	public static void commandLine(ArtistRepository repository){
 		Artist artist = null;
 		while(true){
 			String[] command = getInput();
@@ -42,8 +54,16 @@ public class Client {
 						}
 						
 						artist = RapGenius.searchArtist(searchQuery.trim());
-						RapGenius.populateSongsFromArtistPage(artist);
-						RapGenius.populateSongLyricsFromSongs(artist);
+						Artist databaseQuery = checkDatabaseForArtist(artist.getArtistName(), repository);
+						if(databaseQuery != null){
+							System.out.println("Artist already stored in database.");
+							artist = databaseQuery;
+						}
+						else{
+							RapGenius.populateSongsFromArtistPage(artist);
+							RapGenius.populateSongLyricsFromSongs(artist);
+							repository.save(artist);
+						}
 						
 						break;
 					case "markov":
@@ -62,14 +82,25 @@ public class Client {
 		}
 		
 	}
-	
-	public static void main(String args[]){
-		commandLine();
-		/*Artist testArtist = RapGenius.searchArtist("drake");
+
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
 		
-		RapGenius.populateSongsFromArtistPage(testArtist);
-		RapGenius.populateSongLyricsFromSongs(testArtist);
-		testArtist.populateArtistMarkov();
-		System.out.println(testArtist.getMarkovModel().generate(200));*/
+		
+		commandLine(repository);
+
+		//repository.deleteAll();
+
+		//repository.save(new Artist("Kanye West"));
+
+		/*for (Artist artist : repository.findAll()) {
+			System.out.println(artist);
+		}
+		System.out.println(repository.findByArtistName("Kanye est"));*/
+
 	}
 }

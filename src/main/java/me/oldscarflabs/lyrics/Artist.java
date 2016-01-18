@@ -1,15 +1,23 @@
-package lyrics;
+package me.oldscarflabs.lyrics;
 
 import java.util.ArrayList;
 
-import markov.Markov;
+import org.springframework.data.annotation.Id;
+
+import me.oldscarflabs.markov.Markov;
 
 public class Artist {
+	
+	@Id
+	private String id;
+	
 	private String artistName;
 	private ArrayList<Song> songs;
 	private int numberOfSongs;
 	private String rapGeniusArtistLink;
 	Markov markovModel;
+	
+	public Artist(){}
 	
 	public Artist(String artistName){
 		this.setArtistName(artistName);
@@ -64,5 +72,10 @@ public class Artist {
 	
 	public Markov getMarkovModel(){
 		return this.markovModel;
+	}
+	
+	@Override
+	public String toString(){
+		return String.format("Artist[id=%s, name='%s', songs=%d]", id, artistName, numberOfSongs);
 	}
 }
